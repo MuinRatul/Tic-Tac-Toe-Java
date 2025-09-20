@@ -14,15 +14,6 @@ It provides a simple and interactive graphical user interface (GUI) where two pl
 
 ---
 
-## 📂 Project Structure
-
-Tic-Tac-Toe-java/
- ┣ App.java          # Main class 
- ┣ TicTacToe.java    # Game logic & GUI implementation
- ┗ README.md         # Project documentation
-
----
-
 ## 🚀 How to Run
 
 ### Prerequisites
@@ -35,9 +26,11 @@ Tic-Tac-Toe-java/
    git clone https://github.com/MuinRatul/Tic-Tac-Toe-Java.git
    cd Tic-Tac-Toe-Java
 2. Compile the source files:
+    ```bash
     javac App.java TicTacToe.java
-    
+
 3. Run:
+    ```bash
     java App
 
 4. The Tic Tac Toe GUI window will open, and two players can start playing.
