@@ -36,8 +36,10 @@ Tic-Tac-Toe-java/
    cd Tic-Tac-Toe-Java
 2. Compile the source files:
     javac App.java TicTacToe.java
+    
 3. Run:
     java App
+
 4. The Tic Tac Toe GUI window will open, and two players can start playing.
 
 ---
