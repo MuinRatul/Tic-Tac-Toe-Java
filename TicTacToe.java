@@ -8,16 +8,19 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 public class TicTacToe {
     int boardwidth =600;
-    int boardwight = 650;
+    int boardheight = 650;
 
     JFrame frame = new JFrame("Tic-Tac-Toe");
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
+    
+    JPanel settingpanel = new JPanel();
+    JLabel ternlebel = new JLabel();
+    JPanel toppanel = new JPanel();
 
     JButton[][] board = new JButton[3][3];
     String playerX = "X";
@@ -26,30 +29,58 @@ public class TicTacToe {
 
     boolean gameOver = false;
     int turn =0;
-
+    int matchcount=1;
+    int Xtern = 0;
+    int Otern = 0;
     TicTacToe()
     {
         frame.setVisible(true);
-        frame.setSize(boardwidth, boardwight);
+        frame.setSize(boardwidth, boardheight);
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
         textLabel.setBackground(Color.darkGray);
-        textLabel.setForeground(Color.white);
+        textLabel.setForeground(Color.orange);
         textLabel.setFont(new Font("Arial", Font.BOLD,30));
         textLabel.setText("Tic-Tac-Toe");
         textLabel.setOpaque(true);
 
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textLabel);
-        frame.add(textPanel, BorderLayout.NORTH);
+
+        ternlebel.setFont(new Font("Arial",Font.BOLD,30));
+        ternlebel.setBackground(Color.darkGray);
+        ternlebel.setForeground(Color.white);
+        ternlebel.setText("Match: " +matchcount+ "         Player X: "+Xtern+"     Player O: "+Otern);
+        ternlebel.setOpaque(true);
+
+        toppanel.setLayout(new GridLayout(2,1));
+        toppanel.setBackground(Color.white);
+        toppanel.add(textPanel, BorderLayout.NORTH);
+        toppanel.add(ternlebel, BorderLayout.NORTH);
+        
+        
+        frame.add(toppanel, BorderLayout.NORTH);
 
         boardPanel.setLayout(new GridLayout(3,3));
         boardPanel.setBackground(Color.DARK_GRAY);
         frame.add(boardPanel);
 
+        settingpanel.setLayout(new BorderLayout());
+        settingpanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.black));
+        settingpanel.setBackground(Color.gray);
+        frame.add(settingpanel, BorderLayout.SOUTH);
+
+        setBoard();
+    }
+    /**
+     * The `setBoard` function creates a 3x3 grid of JButtons for a Tic-Tac-Toe game, allowing players
+     * to take turns marking the buttons and checking for a winner.
+     */
+    void setBoard()
+    {
         for(int i =0;i<3;i++)
         {
             for(int j=0;j<3;j++)
@@ -83,11 +114,13 @@ public class TicTacToe {
                         
                     }
                 });
-
             }
         }
-
     }
+   /**
+    * The `checkWinner` function in Java checks for a winning condition in a Tic-Tac-Toe game board and
+    * sets the winner or ends the game if there is a winner or a tie.
+    */
     void checkWinner()
     {
         for (int i = 0; i < 3; i++) {
@@ -147,11 +180,51 @@ public class TicTacToe {
         tile.setBackground(Color.gray);
         tile.setForeground(Color.green);
         textLabel.setText(currentPlayer+ " is the winner!");
+        if(currentPlayer==playerX)
+            Xtern=Xtern+1;
+        else
+            Otern=Otern+1;
+        ternlebel.setText("Match: " +matchcount+ "         Player X: "+Xtern+"     Player O: "+Otern);
+        resbutton();
     }
     void setTile(JButton tile)
     {
         tile.setForeground((Color.orange));
         tile.setBackground(Color.gray);
         textLabel.setText("Tie!");
+        resbutton();
+    }
+    /**
+     * The `resbutton` function creates a JButton for resetting a game of Tic-Tac-Toe with specific
+     * styling and functionality.
+     */
+    void resbutton()
+    {
+        JButton resbutton = new JButton();
+        resbutton.setFont(new Font("Arial",Font.BOLD,20));
+        resbutton.setBackground(Color.white);
+        resbutton.setFocusable(false);
+        resbutton.setText("Play Again!");
+        resbutton.setVisible(true);
+        settingpanel.add(resbutton);
+        resbutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+                
+                boardPanel.removeAll();
+                settingpanel.removeAll();
+                currentPlayer = playerX;
+                gameOver = false;
+                turn =0;
+                textLabel.setText("Tic-Tac-Toe");
+                setBoard();
+                boardPanel.revalidate();           
+                boardPanel.repaint();
+                settingpanel.revalidate();
+                settingpanel.repaint();
+                matchcount++;
+                ternlebel.setText("Match: " +matchcount+ "         Player X: "+Xtern+"     Player O: "+Otern);
+            }
+        });
     }
 }
